@@ -1,0 +1,381 @@
+@font-face {
+    font-family: callMeMaybe;
+    src: url('./font/KGCallMeMaybe.ttf');
+}
+body {
+    font-family: "Roboto Slab", serif;
+    font-size: 16px;
+    padding-top:120px;
+}
+.navbar {
+    font-family: "Roboto", serif;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+.navbar-brand {
+    position: relative;
+    left: 10%;
+}
+ul {    
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  list-style-type: none;
+}
+ul li a {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    display: block;
+    transition: 0.5s;
+}
+ul li a::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 3px;
+    top: 100%;
+    left: 0;
+    background: #cca055;
+    transition: transform 0.2s;
+    /*transform: scaleX(0);
+    transform-origin: right;*/
+    transform: scaleY(0);
+    transform-origin: top;
+}
+ul li a:hover {
+    color: #95a5a6;
+}
+ul li a:hover::after {
+    /*transform: scaleX(1);
+    transform-origin: left;*/
+    transform: scaleY(0.6);
+    transform-origin: bottom;
+}
+ul .slash {
+    height:2px;
+    width: 22px;
+    background: #cca055;
+    position: relative;
+    top: 18px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+#intro {
+    background-image: url('./img/interieur-restaurant-la-causerie.jpg');
+    padding-top: 200px;
+    padding-bottom: 200px;
+    
+}
+#intro h1 {
+    font-size: 7vw;
+    font-family: callMeMaybe, arial, sans-serif;
+    line-height: 1;
+    color: white;
+    letter-spacing: 2px;
+}
+#intro h2 {
+    font-family: "Roboto Slab", serif;
+    color: #cca055;
+    font-size: 4vw;
+    letter-spacing: 2px;
+}
+#intro button {
+    font-family: "Roboto", serif;
+    letter-spacing: 3px;
+}
+#intro .address {
+    letter-spacing: 2px;
+}
+#intro .tel {
+    letter-spacing: 2px;
+    color: #cca055;
+}
+#intro #scrollDown {
+    border-radius: 50%;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+#intro #scrollDown svg:hover {
+    display: none;
+} 
+#lacarte {
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+#lacarte .container {
+    border: 2px solid #cca055;
+}
+#lacarte .container h2 {
+    display: inline-block;
+    position: relative;
+    margin-top: 0;
+    top: -28px;
+    border: 2px solid #cca055;
+    color: #cca055;
+    letter-spacing: 2px;
+    background: #f0f0f0;
+}
+#lacarte .entree img {
+    display: block;
+    margin: auto;
+    max-height: 58px;
+}
+#lacarte .ingredients {
+    color: #aaa;
+    font-size: .9em;
+    max-width: 300px;
+    margin: auto;
+}
+#lacarte .container .menusjour {
+    color: #cca055;
+}
+#lacarte .prix {
+    color: #cca055;
+}
+.slashcarte {
+    display: inline-block;
+    height:2px;
+    width: 60px;
+    background: #cca055;
+    position: relative;
+    top: 30px;
+    right: 300px;
+    transform: rotate(-45deg);
+}
+.slashdesserts {
+    display: inline-block;
+    height:2px;
+    width: 60px;
+    background: #cca055;
+    position: relative;
+    top: 0;
+    right: 0;
+    transform: rotate(-45deg);
+}
+.slashplats {
+    display: inline-block;
+    height:2px;
+    width: 60px;
+    background: #cca055;
+    position: relative;
+    top: 0;
+    right: 0;
+    transform: rotate(-45deg);
+}
+.slashentrees {
+    display: inline-block;
+    height:2px;
+    width: 60px;
+    background: #cca055;
+    position: relative;
+    top: 20px;
+    right: 0;
+    transform: rotate(-45deg);
+}
+.slashmenudujour {
+    display: inline-block;
+    height:2px;
+    width: 60px;
+    background: #cca055;
+    position: relative;
+    top: 0;
+    right: 0;
+    transform: rotate(-45deg);
+}
+.slashtrouver {
+    display: inline-block;
+    height:2px;
+    width: 60px;
+    background: #cca055;
+    position: relative;
+    top: 120px;
+    right: 0;
+    transform: rotate(-45deg);
+}
+.carousel-caption {
+    margin-bottom: 10rem;
+}
+.carousel-caption h2 {
+    position: relative;
+    top: -20px;
+    font-size: 6vw;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.carousel-caption span {
+    font-size: 2vw;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+#tableaunoir {
+    background-image: url('./img/lerestau/fond-tableau-noir.jpg');
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+#tableaunoir h1 {
+    font-size: 5vw;
+    font-family: callMeMaybe, arial, sans-serif;
+    line-height: 1;
+    letter-spacing: 2px;
+}
+#tableaunoir button {
+    font-family: "Roboto", serif;
+    letter-spacing: 3px;
+}
+#tableaunoir a {
+    position: relative;
+    display: inline-block;
+    top: 15px;
+    left: 50px;
+    font-size: 1.5em;
+    text-decoration: none;
+    color: white;
+}
+.slashfacebook {
+    display: inline-block;
+    height:2px;
+    width: 100px;
+    background: #aaa;
+    position: relative;
+    top: 5px;
+    left: 80px;
+    transform: rotate(-45deg);
+}
+#lesactus {
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+#lesactus h2 {
+    position: relative;
+    top: -20px;
+    font-size: 6vw;
+}
+#lesactus span {
+    font-size: 2.5vw;
+}
+#lesactus img {
+    width: 100%;
+}
+.actu {
+    background-color: white;
+    border: 25px solid #f0f0f0;
+}
+.actu a {
+    text-decoration: none;
+    color: black;
+}
+.actu h3:hover {
+    color: #cca055;
+}
+.actu .date {
+    display: block;
+    margin-bottom: 25px;
+    color: #aaa;
+}
+#carouselFooter .carousel-item {
+    height: 500px;
+}
+#carouselFooter .carousel-item img {
+    position: relative;
+    top: 0;
+    left: 0;
+    min-height: 300px;
+}
+#noustrouver {
+    box-sizing: border-box;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+#noustrouver h2 {
+    position: relative;
+    top: -20px;
+    font-size: 6vw;
+}
+#noustrouver span {
+    font-size: 2.5vw;
+}
+#noustrouver a {
+    text-decoration: none;
+    color: black;
+}
+#noustrouver .tel {
+    color: #cca055;
+}
+#attendons {
+    box-sizing: border-box;
+    background-color: #cca055;
+}
+#attendons h2 {
+    font-size: 7vw;
+    font-family: callMeMaybe, arial, sans-serif;
+    line-height: 1;
+    color: white;
+}
+#attendons button {
+    font-family: "Roboto", serif;
+    letter-spacing: 3px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+#attendons a {
+    position: relative;
+    display: inline-block;
+    top: 15px;
+    left: 50px;
+    font-size: 1.5em;
+    text-decoration: none;
+    color: white;
+}
+#footer {
+    color: #cca055;
+}
+
+
+@media (max-width: 992px) {
+    .slashcarte, .slash, .slashdesserts, .slashplats, .slashentrees, .slashmenudujour, .slashfacebook, .slashtrouver {
+        display: none;
+    }
+    #lacarte {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    #lacarte .container {
+        padding: 0;
+        margin: 0;
+    }
+    .carousel-caption h2 {
+        top: -10px;
+    }
+    #lesactus {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    #lesactus .container {
+        padding: 0;
+        margin: 0;
+    }
+    #lesactus h2 {
+        top: -10px;
+    }
+    #noustrouver h2 {
+        top: -10px;
+    }
+    #attendons button {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+}

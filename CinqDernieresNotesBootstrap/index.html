@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="./formulaire.css" rel="stylesheet" type="text/css">
+   <script src="./formulaire.js" defer></script>
+
+    <title>Account creation form</title>
+  </head>
+  <body>
+      <div class="container">
+        <div class="row">
+          <h1>Fill in the form to calculate your grades</h1>
+        </div>
+        <form action="notes.html" method="get" id="form">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-1">
+                    <label for="firstname" class="form-label">Firstname</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="firstname" id="firstname" aria-describedby="firstname" required>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center">
+                <div class="col-md-1">
+                    <label for="lastname" class="form-label">Lastname</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby="lastname" required>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center">
+                <div class="col-md-1 up">
+                    <label for="email" class="form-label">Email address</label>
+                </div>
+              <div class="col-md-2">
+                <input type="email" class="form-control" id="email" aria-describedby="email" required>
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center">
+                <div class="col-md-1 up">
+                    <label for="password" class="form-label">Password</label>
+                </div>
+              <div class="col-md-2">
+                <input type="password" class="form-control" id="password" required>
+                <div id="passwordInclude" class="form-text">Your password must be 8-20 characters long</div>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center">
+                <div class="col-md-1">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                    <div id="passwordAgain" class="form-text">Type your password again</div>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center form-check">
+                <div class="col-md-2 checkbox">
+                    <label class="form-check-label" for="newsletter">Newsletter</label>
+                    <input type="checkbox" class="form-check-input" id="newsletter">
+                </div>
+            </div>
+            <div class="row g-3 align-items-center form-check">
+                <div class="col-md-3 checkbox">
+                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                  <label class="form-check-label" for="invalidCheck2">
+                    Agree to terms and conditions
+                  </label>
+                </div>
+              </div>
+            <div class="row g-3 align-items-center form-check">
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                </div>
+            </div>
+            
+          </form>
+        </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>

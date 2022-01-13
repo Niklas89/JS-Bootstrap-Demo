@@ -1,0 +1,4 @@
+1: PC PORTABLE
+2: Ultrabook
+3: PC Portable Gamer
+4: Portable Mac

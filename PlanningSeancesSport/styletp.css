@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+table {
+    width: 70%;
+    margin: auto;
+}
+h1 {
+    text-align: center;
+    margin-top: 0;
+    padding-top:30px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-style: italic;
+    color:white;
+}
+header {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    height:100px;
+}
+section {
+    padding-top:100px;
+    background-image: url('./yoga.jpg');
+    background-size: cover;
+    height:500px;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    height: 70px;
+    font-family: 'Arima Madurai', cursive;
+}
+.heure {
+    background-color: white;
+}
+.pausedej {
+    background-image: url('./stripes.png');
+}
+.jour {
+    background-color: #e5e5e5;
+}
+.horaire {
+    background-color: #e5e5e5;
+    font-weight: bold;
+}
+#horairepausedej td {
+    background-color: #e5e5e5;
+    font-weight: bold;
+    height: 40px;
+
+}
+.yoga {
+    background-color: #009bcc;
+    color: white;
+}
+.stretching {
+    background-color: #11bcaf;
+    color: white;
+}
+.biking {
+    background-color: #96c21f;
+    color: white;
+}
+.selfdefense {
+    background-color: #e65686;
+    color: white;
+}
+.boxe {
+    background-color: #d9006b;
+    color: white;
+}
+.cardio {
+    background-color: #7459ad;
+    color: white;
+}
+.crossfit {
+    background-color: #e96b28;
+    color: white;
+}

@@ -1,0 +1,15 @@
+#buttonsMenuRow .col-md-4 {
+    margin-top: 50px;
+    text-align: center;
+}
+#titleFirstRow .col-md-12 {
+    margin-top: 50px;
+}
+
+#contactListRow {
+    margin-top: 50px;
+}
+
+#formAddContact {
+    margin-bottom: 50px;
+}

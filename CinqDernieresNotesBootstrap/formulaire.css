@@ -1,0 +1,14 @@
+.row {
+    margin-top: 5px;
+    /* text-align:center; */
+}
+.up {
+    margin-bottom: 40px;
+}
+.checkbox {
+    padding-left:40px;
+}
+
+#demo{
+    background-color: yellow;
+}

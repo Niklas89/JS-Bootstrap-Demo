@@ -1,0 +1,7 @@
+Construisez une page html avec un bouton et un champ number. Le but est de trouver un nombre entre 0 et 100. A chaque réponse la page répond :
+
+    plus
+    moins
+    correcte
+
+Quand la réponse est trouvée, on obtient le nombre d'essais que l'on a fait.
