@@ -1,3 +1,11 @@
+// add a method to localStorage
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
+
 class Product {
     constructor(name, ref, quantity, description, price, category, productId) {
       this.name = name;
@@ -101,18 +109,73 @@ const productComponents = [
     c4p1Component, c4p2Component, c4p3Component, c4p4Component
 ]; 
 
-
+// view all products, this function is launched when the page is loaded 
 const viewAllProducts = () => {
     for(const product of productComponents){
+        // load every product to the main page
         mainPageProductDiv(product.categoryText, product.productIdText, product.nameText, product.quantityText, product.descriptionText, product.priceText);
+        
+        // Load everything that's in the local storage to the cart
+        // localStorageLoadToCart(product.productIdText, product.nameText);
+        
+        // check if there is anything in the cartQuantity and cartPrice that has been added through function localStorageLoadToCart()
+        /* console.log(cartPrice[product.productIdText]);
+        console.log(cartQuantity[product.productIdText]);
+       if(!isNaN(cartPrice[product.productIdText]));
+       {
+        console.log("C'est un nombre'");
+       } */
+       
     }
 };
 
+// Load everything that's in the local storage to the cart
+const localStorageLoadToCart = (productId, name) => {
+        // check if there is any product in localStorage, if there is add them to the cart
+        const objProduct = getProducts(name);
+        const objQuantity = getProducts("cartQuantity");
+        const objPrice = getProducts("cartPrice");
+        if(objProduct != {} && objProduct.productIdText == productId)
+        {
+            // I get the key of the object objQuantity with keyQuant and the value with objQuantity[keyQuant]
+            // I store key and value inside my cartQuantity object array, so I know the number of products in the cart
+            if (Array.from(Object.keys(objQuantity)).includes(productId.toString())) {
+                const arrayQuantity = Array.from(Object.keys(objQuantity));
+                for(const keyQuant of arrayQuantity) {
+                   cartQuantity[keyQuant] = objQuantity[keyQuant];
+                   productAlreadyInCart[productId] = true;
+                }
+            } 
+            // I get the key of the object objPrice with keyPrice and the value with objPrice[keyPrice]
+            // I store key and value inside my cartPrice object array, so I know the price of each product in the cart
+            if (Array.from(Object.keys(objPrice)).includes(productId.toString())) {
+                const arrayPrice = Array.from(Object.keys(objPrice));
+                for(const keyPrice of arrayPrice) {
+                    cartPrice[keyPrice] = objPrice[keyPrice];
+                }
+            }
+        } 
+}
 
+// get the products from localStorage
+const getProducts = (name) => {
+    //console.log("function getproducts product.nameText "+name);
+    let objProduct = JSON.parse(localStorage.getItem(name));
+    if(objProduct == null)
+    {
+        objProduct = {};
+    }
+    //console.log("getProducts "+objProduct);
+    return objProduct;
+}
+
+
+// hide the products that aren't in the selected category when changing category
 const hideAllProducts = () => {
         document.querySelector('#productContainer').innerHTML = "<p></p>";
 };
 
+// add products in the main page
 const mainPageProductDiv = (category, productId, name, quantity, description, price) => {
     const productDiv = `<div class="card" style="width: 18em;">
                 <img src="img/${category}/${productId}.jpg" class="card-img-top" alt="${name}">
@@ -128,7 +191,7 @@ const mainPageProductDiv = (category, productId, name, quantity, description, pr
 }
 
 
-// switch between each category
+// switch between each category, hide the products that aren't in the selected category
 const displayCategory = (category) => {
     hideAllProducts();
     for(const product of productComponents){
@@ -139,7 +202,7 @@ const displayCategory = (category) => {
 };
 
 
-
+// add the total price to the HTML in the footer of the cart
 const addTotalPriceHtml = (price) => {
     let htmlTotalPrice = ` `;
     if(price > 0) {
@@ -148,6 +211,7 @@ const addTotalPriceHtml = (price) => {
     document.querySelector('#totalPrice').innerHTML = htmlTotalPrice;
 };
 
+// add the HTML of a product in the cart after clicking on "Ajouter au panier"
 const addHtmlCard = (productId, quantity, name, description, ref, price) => {
     const productRow = `<div class="row" id="cartCardRow${productId}">
             <div class="col-lg-9">
@@ -176,19 +240,19 @@ const addHtmlCard = (productId, quantity, name, description, ref, price) => {
     return productRow;
 }
 
+
+
 // add products to the cart 
 const addToCart = (productid) => {
-    for(const product of productComponents){
+    for(const product of productComponents){        
         if(productid == product.productIdText && (productAlreadyInCart[productid] == undefined || productAlreadyInCart[productid] == false)) {
             let priceFloat = parseFloat(product.priceText);
             let price = priceFloat;
-            console.log(price);
             productAlreadyInCart[productid] = true;
             if(cartQuantity[productid] == undefined) {
                 cartQuantity[productid] = 1;
                 cartPrice[productid] = price;
-               console.log("cartPrice["+productid+"] : "+cartPrice[productid]); 
-               console.log("cartQuantity["+productid+"] : "+cartQuantity[productid]); 
+                // if the quantity of this product is equal to the stock , you get an error message
             } else if(cartQuantity[productid] == product.quantityText) {
                 // verify is the quantity of productid already in the cart is equal to the quantity in stock
                 alert("Vous ne pouvez pas en ajouter plus dans le panier, car le stock est limité à "+product.quantityText+" produits.");
@@ -202,10 +266,15 @@ const addToCart = (productid) => {
         const productRow = addHtmlCard(product.productIdText, product.quantityText, product.nameText, product.descriptionText, product.refText, price);  
         document.querySelector('.modal-body').innerHTML += productRow;
         totalPrice += price;
-        } else if(productid == product.productIdText && productAlreadyInCart[productid] == true) {
+        // call the method setObj to set an object in the localStorage
+        /* localStorage.setObj(product.nameText,product);
+        localStorage.setObj("cartQuantity",cartQuantity);
+        localStorage.setObj("cartPrice",cartPrice); */
+        } 
+        // else if there already are products in the cart
+        else if(productid == product.productIdText && productAlreadyInCart[productid] == true) {
             let priceFloat = parseFloat(product.priceText);
             let price = priceFloat;
-            console.log(price);
             // verify is the quantity of productid already in the cart is equal to the quantity in stock
             if(cartQuantity[productid] == product.quantityText) {
                 alert("Vous ne pouvez pas en ajouter plus dans le panier, car le stock est limité à "+product.quantityText+" produits.");
@@ -214,8 +283,10 @@ const addToCart = (productid) => {
             const productUpdateQuantity = updateHtmlCart(product.productIdText, product.quantityText, product.nameText, product.descriptionText, product.refText, price);  
             document.querySelector('#cartCardRow'+productid).innerHTML = productUpdateQuantity;
             totalPrice += price;
-            console.log(price);
-            console.log(totalPrice);
+            // call the method setObj to set an object in the localStorage
+            /* localStorage.setObj(product.nameText,product);
+            localStorage.setObj("cartQuantity",cartQuantity);
+            localStorage.setObj("cartPrice",cartPrice); */
         }
     }
     addTotalPriceHtml(totalPrice);
@@ -285,13 +356,14 @@ const updateCart = (productid) => {
     }
 }
 
-
+// delete a product after clicking on "Supprimer" on a product in the cart
 const deleteProduct = (productid) => {
     const modalbody = document.querySelector('.modal-body');
     for(const product of productComponents){
         if(productid == product.productIdText) {
             const card = document.getElementById("cartCardRow"+product.productIdText);
             modalbody.removeChild(card);
+            localStorage.removeItem(product.nameText);
             totalPrice -= cartPrice[productid];
             productAlreadyInCart[productid] = false;
             cartPrice[productid] = 0;
@@ -301,7 +373,7 @@ const deleteProduct = (productid) => {
     addTotalPriceHtml(totalPrice);
 };
 
-
+// Hide or show the field to modify the quantity of products in the cart
 const updateQuantity = (productid) => {
     const form = document.getElementById("cartCardEditQuantity"+productid);
     if(form.hidden == false) {
@@ -311,7 +383,7 @@ const updateQuantity = (productid) => {
     }   
 }
 
-
+// submit the quantity of products needed after clicking on "Modifier la quantité" in the cart
 const submitQuantity = (productid, event) => {
     event.preventDefault(); 
     totalPrice = 0;
@@ -338,9 +410,6 @@ const submitQuantity = (productid, event) => {
             // multiply the quantity of products inserted in the cart by the price of the product and store the value inside cartPrice
             let multiplyQuantPrice = cartQuantity[productid] * product.priceText;
             cartPrice[productid] = multiplyQuantPrice;
-            console.log(product.priceText);
-            console.log(cartPrice[productid]);
-            console.log(totalPrice);
             calculateTotalPrice();
         } 
         
@@ -349,25 +418,25 @@ const submitQuantity = (productid, event) => {
     addTotalPriceHtml(totalPrice);
 }
 
+// calculate the total price
 const calculateTotalPrice = () => {
     for(const product of productComponents){
         for(const [key, value] of Object.entries(cartQuantity)){
             if(key == product.productIdText) {
-                totalPrice += cartPrice[key];
-                console.log("cartPrice["+key+"] : "+cartPrice[key]); 
-             console.log("cartQuantity["+key+"] : "+cartQuantity[key]);
-            console.log("totalPrice : "+totalPrice); 
+                totalPrice += cartPrice[key]; 
             }
         }
     }
 }
 
-
+// empty/clear the cart
 const emptyCart = () => {
     document.querySelector('.modal-body').innerHTML = "<p>Le panier est vide</p>";
     for(const product of productComponents) {
         for(const [key, value] of Object.entries(cartQuantity)){
             if(key == product.productIdText) {
+                // empty/clear localStorage
+                localStorage.clear();
                 cartQuantity[key] = 0;
                 cartPrice[key] = 0;
                 productAlreadyInCart[key] = false;
@@ -375,53 +444,63 @@ const emptyCart = () => {
         }
     }
     totalPrice = 0;
+    // add the total price to the HTML
     addTotalPriceHtml(totalPrice);
 }
 
 
 document.addEventListener('click', event => {
 
+    // change category to PC Portable
     if(event.target.matches('#pc-portable'))
     {
         displayCategory('1');
     }
 
+    // change category to Ultrabook
     if(event.target.matches('#ultrabook'))
     {
         displayCategory('2');
     }
 
+    // change category to PC Portable Gamer
     if(event.target.matches('#pc-portable-gamer'))
     {
         displayCategory('3');
     }
 
+    // change category to Portable Mac
     if(event.target.matches('#portable-mac'))
     {
         displayCategory('4');
     }
 
+    // add a product to the cart
     if(event.target.matches('.addToCart'))
     {
         addToCart(event.target.dataset.id)
     }
 
+    // delete a product in the cart
     if(event.target.matches('.deleteProduct'))
     {
         deleteProduct(event.target.dataset.id)
     }
 
+    // modify quantity of product in cart
     if(event.target.matches('.updateQuantity'))
     {
         //console.log(event.path)
         updateQuantity(event.target.dataset.id)
     }
-    
+
+    // submit the modified quantity of product in cart
     if(event.target.matches('.submitQuantity'))
     {
         submitQuantity(event.target.dataset.id, event)
     }
-    
+
+    // empty/clear the cart
     if(event.target.matches('#emptyCart'))
     {
         emptyCart()
@@ -429,7 +508,7 @@ document.addEventListener('click', event => {
         
 });
 
-
+// View all products as soon as the page has loaded
 document.addEventListener('DOMContentLoaded', () => {
     viewAllProducts();
 });
