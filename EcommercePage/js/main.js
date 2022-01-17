@@ -1,11 +1,11 @@
-// add a method to localStorage
+// add a method for localStorage
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
 }
 Storage.prototype.getObj = function(key) {
     return JSON.parse(this.getItem(key))
 }
-
+// create a class product
 class Product {
     constructor(name, ref, quantity, description, price, category, productId) {
       this.name = name;
@@ -16,10 +16,9 @@ class Product {
       this.category = category;
       this.productId = productId;
     }
-
-  }
-
-  const generateComponent = (product) => {
+}
+// create a generateComponent function which returns all details of a product
+const generateComponent = (product) => {
     const nameText = product.name;
     const refText = product.ref;
     const quantityText = product.quantity;
@@ -36,8 +35,8 @@ class Product {
       categoryText,
       productIdText
     };
-  }
-
+}
+  // set the total price that will be visible in the footer of the cart to zero
   let totalPrice = 0;
   // quantity per product in the cart: { productid1: 'quantity', productid2: 'quantity', productid3: 'quantity' }
   let cartQuantity = {};
@@ -78,7 +77,8 @@ const c4p2 = new Product('Apple MacBook Pro M1 Pro (2021) 16 Gris Sidéral', 'MK
 const c4p3 = new Product('Apple MacBook Air M1 - 8 Go / 256 Go - Or', '183FPOIA76', 2, 'PC Ultra portable 13.3 Rétina (2560 x 1600) - Apple M1 Octo-Core 3.2 GHz - 8 Go LPDDR4X - SSD 256 Go - 1.29 Kg - macOS Big Sur', 1129.99, 4, 18);
 const c4p4 = new Product('Apple MacBook Air M1 - 8 Go / 512 Go - Gris sidéral', 'LKJFD321A76', 12, 'PC Ultra portable 13.3 Rétina (2560 x 1600) - Apple M1 Octo-Core 3.2 GHz - 8 Go LPDDR4X - SSD 512 Go - 1.29 Kg - macOS Big Sur', 1399.99, 4, 19);
 
-
+// insert each product object inside a variable, all the details (quantity, description...) 
+// of each product (c4p4 for ex) have been returned by generateComponent() function
 const c1p1Component = generateComponent(c1p1);
 const c1p2Component = generateComponent(c1p2);
 const c1p3Component = generateComponent(c1p3);
@@ -102,6 +102,8 @@ const c4p2Component = generateComponent(c4p2);
 const c4p3Component = generateComponent(c4p3);
 const c4p4Component = generateComponent(c4p4);
 
+// all of the above variables are stored in an array, this array is used in this program to loop through 
+// the details (quantity, description...) of each product
 const productComponents = [
     c1p1Component, c1p2Component, c1p3Component, c1p4Component, c1p5Component,
     c2p1Component, c2p2Component, c2p3Component, c2p4Component, c2p5Component,
@@ -114,18 +116,8 @@ const viewAllProducts = () => {
     for(const product of productComponents){
         // load every product to the main page
         mainPageProductDiv(product.categoryText, product.productIdText, product.nameText, product.quantityText, product.descriptionText, product.priceText);
-        
         // Load everything that's in the local storage to the cart
-        // localStorageLoadToCart(product.productIdText, product.nameText);
-        
-        // check if there is anything in the cartQuantity and cartPrice that has been added through function localStorageLoadToCart()
-        /* console.log(cartPrice[product.productIdText]);
-        console.log(cartQuantity[product.productIdText]);
-       if(!isNaN(cartPrice[product.productIdText]));
-       {
-        console.log("C'est un nombre'");
-       } */
-       
+        localStorageLoadToCart(product.productIdText, product.nameText); 
     }
 };
 
@@ -135,15 +127,16 @@ const localStorageLoadToCart = (productId, name) => {
         const objProduct = getProducts(name);
         const objQuantity = getProducts("cartQuantity");
         const objPrice = getProducts("cartPrice");
-        if(objProduct != {} && objProduct.productIdText == productId)
+        if(objProduct.productIdText == productId)
         {
             // I get the key of the object objQuantity with keyQuant and the value with objQuantity[keyQuant]
             // I store key and value inside my cartQuantity object array, so I know the number of products in the cart
             if (Array.from(Object.keys(objQuantity)).includes(productId.toString())) {
                 const arrayQuantity = Array.from(Object.keys(objQuantity));
                 for(const keyQuant of arrayQuantity) {
-                   cartQuantity[keyQuant] = objQuantity[keyQuant];
-                   productAlreadyInCart[productId] = true;
+                    if(objProduct.productIdText == keyQuant) {
+                        cartQuantity[keyQuant] = objQuantity[keyQuant];
+                    }
                 }
             } 
             // I get the key of the object objPrice with keyPrice and the value with objPrice[keyPrice]
@@ -151,21 +144,37 @@ const localStorageLoadToCart = (productId, name) => {
             if (Array.from(Object.keys(objPrice)).includes(productId.toString())) {
                 const arrayPrice = Array.from(Object.keys(objPrice));
                 for(const keyPrice of arrayPrice) {
-                    cartPrice[keyPrice] = objPrice[keyPrice];
+                    if(objProduct.productIdText == keyPrice) {
+                        cartPrice[keyPrice] = objPrice[keyPrice];
+                        totalPrice += cartPrice[keyPrice];
+                    }
                 }
             }
+            // check if the local storage , if products have been added already or not
+            addToCartFromLocalStorage(productId);
         } 
+}
+
+const addToCartFromLocalStorage = (productid) => {
+    for(const product of productComponents){
+        if(productid == product.productIdText && (productAlreadyInCart[productid] == undefined || productAlreadyInCart[productid] == false)) {
+            let priceFloat = parseFloat(product.priceText);
+            let price = priceFloat;
+            productAlreadyInCart[productid] = true;
+            const productRow = addHtmlCard(product.productIdText, product.quantityText, product.nameText, product.descriptionText, product.refText, price);  
+            document.querySelector('.modal-body').innerHTML += productRow;
+            addTotalPriceHtml(totalPrice);
+        }
+    }
 }
 
 // get the products from localStorage
 const getProducts = (name) => {
-    //console.log("function getproducts product.nameText "+name);
     let objProduct = JSON.parse(localStorage.getItem(name));
     if(objProduct == null)
     {
         objProduct = {};
     }
-    //console.log("getProducts "+objProduct);
     return objProduct;
 }
 
@@ -267,9 +276,9 @@ const addToCart = (productid) => {
         document.querySelector('.modal-body').innerHTML += productRow;
         totalPrice += price;
         // call the method setObj to set an object in the localStorage
-        /* localStorage.setObj(product.nameText,product);
+        localStorage.setObj(product.nameText,product);
         localStorage.setObj("cartQuantity",cartQuantity);
-        localStorage.setObj("cartPrice",cartPrice); */
+        localStorage.setObj("cartPrice",cartPrice);
         } 
         // else if there already are products in the cart
         else if(productid == product.productIdText && productAlreadyInCart[productid] == true) {
@@ -284,9 +293,9 @@ const addToCart = (productid) => {
             document.querySelector('#cartCardRow'+productid).innerHTML = productUpdateQuantity;
             totalPrice += price;
             // call the method setObj to set an object in the localStorage
-            /* localStorage.setObj(product.nameText,product);
+            localStorage.setObj(product.nameText,product);
             localStorage.setObj("cartQuantity",cartQuantity);
-            localStorage.setObj("cartPrice",cartPrice); */
+            localStorage.setObj("cartPrice",cartPrice);
         }
     }
     addTotalPriceHtml(totalPrice);
@@ -365,9 +374,21 @@ const deleteProduct = (productid) => {
             modalbody.removeChild(card);
             localStorage.removeItem(product.nameText);
             totalPrice -= cartPrice[productid];
+            // delete the cart price and cart quantity corresponding to the key of the deleted product
+            for(const [key, value] of Object.entries(cartPrice)){
+                if(key == productid) {
+                    delete cartPrice[key]; 
+                    localStorage.setItem("cartPrice", JSON.stringify(cartPrice));
+                }
+            }
+            for(const [key, value] of Object.entries(cartQuantity)){
+                if(key == productid) {
+                    delete cartQuantity[key]; 
+                    localStorage.setItem("cartQuantity", JSON.stringify(cartQuantity));
+                }
+            }
+            // the product deleted will be set to false: not in cart anymore
             productAlreadyInCart[productid] = false;
-            cartPrice[productid] = 0;
-            cartQuantity[productid] = 0;
         }
     }
     addTotalPriceHtml(totalPrice);
@@ -410,9 +431,11 @@ const submitQuantity = (productid, event) => {
             // multiply the quantity of products inserted in the cart by the price of the product and store the value inside cartPrice
             let multiplyQuantPrice = cartQuantity[productid] * product.priceText;
             cartPrice[productid] = multiplyQuantPrice;
+            // call the method setObj to update the object in the localStorage
+            localStorage.setObj("cartQuantity",cartQuantity);
+            localStorage.setObj("cartPrice",cartPrice);
             calculateTotalPrice();
         } 
-        
     }
     updateCart(productid);
     addTotalPriceHtml(totalPrice);
@@ -490,7 +513,6 @@ document.addEventListener('click', event => {
     // modify quantity of product in cart
     if(event.target.matches('.updateQuantity'))
     {
-        //console.log(event.path)
         updateQuantity(event.target.dataset.id)
     }
 
