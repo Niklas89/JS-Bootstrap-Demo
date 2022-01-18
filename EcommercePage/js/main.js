@@ -186,17 +186,16 @@ const hideAllProducts = () => {
 
 // add products in the main page
 const mainPageProductDiv = (category, productId, name, quantity, description, price) => {
-    const productDiv = `<div class="card" style="width: 18em;">
-                <img src="img/${category}/${productId}.jpg" class="card-img-top" alt="${name}">
-                <div class="card-body">
-                  <h5 class="card-title">${name}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Quantité en stock: ${quantity}</h6>
-                  <p class="card-text">${description}</p>
-                  <h6 class="card-subtitle mb-2">Tarif: ${price} €</h6>
-                  <button class="btn btn-primary addToCart" data-id="${productId}">Ajouter au panier</button>
-                </div>
-              </div>`;
-        document.querySelector('#productContainer').innerHTML += productDiv;
+        document.querySelector('#productContainer').innerHTML +=`<div class="card" style="width: 18em;">
+        <img src="img/${category}/${productId}.jpg" class="card-img-top" alt="${name}">
+        <div class="card-body">
+          <h5 class="card-title">${name}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Quantité en stock: ${quantity}</h6>
+          <p class="card-text">${description}</p>
+          <h6 class="card-subtitle mb-2">Tarif: ${price} €</h6>
+          <button class="btn btn-primary addToCart" data-id="${productId}">Ajouter au panier</button>
+        </div>
+      </div>`;
 }
 
 
